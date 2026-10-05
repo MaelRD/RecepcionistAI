@@ -1,0 +1,113 @@
+@import 'tailwindcss';
+
+/* El color de marca cambia según el negocio seleccionado (ver App.tsx). */
+:root {
+  --brand-50: #eef2ff;
+  --brand-100: #e0e7ff;
+  --brand-500: #6366f1;
+  --brand-600: #4f46e5;
+  --brand-700: #4338ca;
+}
+
+@theme inline {
+  --font-sans: 'Geist', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-mono: 'Geist Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  --color-brand-50: var(--brand-50);
+  --color-brand-100: var(--brand-100);
+  --color-brand-500: var(--brand-500);
+  --color-brand-600: var(--brand-600);
+  --color-brand-700: var(--brand-700);
+
+  --color-canvas: #f7f7f8;
+  --color-ink: #111113;
+
+  --shadow-soft: 0 1px 2px rgb(16 16 20 / 0.04), 0 4px 16px -4px rgb(16 16 20 / 0.06);
+  --shadow-lift: 0 1px 2px rgb(16 16 20 / 0.05), 0 12px 32px -8px rgb(16 16 20 / 0.14);
+  --shadow-ring: 0 0 0 1px rgb(16 16 20 / 0.06);
+
+  --ease-out-quint: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@layer base {
+  html,
+  body,
+  #root {
+    height: 100%;
+  }
+  body {
+    @apply bg-canvas text-ink font-sans antialiased;
+    font-feature-settings: 'ss01', 'cv11';
+    -webkit-tap-highlight-color: transparent;
+  }
+  ::selection {
+    background: var(--brand-100);
+  }
+  button {
+    cursor: pointer;
+  }
+  button:disabled {
+    cursor: not-allowed;
+  }
+  :focus-visible {
+    outline: 2px solid var(--brand-500);
+    outline-offset: 2px;
+    border-radius: 8px;
+  }
+}
+
+@layer components {
+  .card {
+    @apply rounded-2xl bg-white shadow-[var(--shadow-soft)] ring-1 ring-zinc-950/[0.05];
+  }
+  .glass {
+    @apply bg-white/70 backdrop-blur-xl backdrop-saturate-150;
+  }
+  .eyebrow {
+    @apply text-[11px] font-medium uppercase tracking-[0.08em] text-zinc-400;
+  }
+  .scroll-thin {
+    scrollbar-width: thin;
+    scrollbar-color: rgb(0 0 0 / 0.12) transparent;
+  }
+  .input {
+    @apply w-full rounded-xl border border-zinc-200 bg-white px-3 py-2 text-sm text-zinc-900 shadow-[0_1px_0_rgb(0_0_0/0.02)] transition placeholder:text-zinc-400 hover:border-zinc-300 focus:border-brand-500 focus:outline-none focus:ring-4 focus:ring-brand-500/10;
+  }
+}
+
+/* Fondo sutil con retícula para el área de chat */
+.chat-backdrop {
+  background-image:
+    radial-gradient(ellipse 80% 50% at 50% -10%, color-mix(in oklab, var(--brand-500) 9%, transparent), transparent 70%),
+    radial-gradient(rgb(0 0 0 / 0.045) 1px, transparent 1px);
+  background-size:
+    100% 100%,
+    22px 22px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+@keyframes shimmer {
+  from {
+    background-position: 100% 0;
+  }
+  to {
+    background-position: -100% 0;
+  }
+}
+
+@keyframes flash {
+  from {
+    background-color: var(--brand-100);
+  }
+  to {
+    background-color: transparent;
+  }
+}
